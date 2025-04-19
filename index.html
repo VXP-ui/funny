@@ -2,10 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome</title>
   <script>
-    fetch('https://ip-logger-backend.onrender.com', {
+    // Trigger the IP logging when the page is loaded
+    fetch('https://ip-logger-backend.onrender.com/log', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        referrer: window.location.href,
+        userAgent: navigator.userAgent
+      })
+    }).then(response => response.text()).then(data => {
+      console.log(data); // Optional: Log the server's response
+    }).catch(error => {
+      console.error('Error logging IP:', error);
     });
   </script>
 </head>
